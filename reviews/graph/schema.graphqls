@@ -6,11 +6,11 @@ type Query {
 type Review {
   id: ID!
   "Written text"
-  comment: String
+  comment: String!
   "A number from 1 - 5 with 1 being lowest and 5 being highest"
-  rating: Int
+  rating: Int!
   "The location the review is about"
-  location: Location
+  location: Location!
 }
 
 type Location {

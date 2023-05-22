@@ -14,8 +14,8 @@ import (
 // SubmitReview is the resolver for the submitReview field.
 func (r *mutationResolver) SubmitReview(ctx context.Context, locationReview *model.LocationReviewInput) (*model.SubmitReviewResponse, error) {
 	newReview := &model.Review{
-		Comment: &locationReview.Comment,
-		Rating:  &locationReview.Rating,
+		Comment: locationReview.Comment,
+		Rating:  locationReview.Rating,
 	}
 	review, err := r.usecase.Create(newReview)
 

@@ -18,11 +18,11 @@ type LocationReviewInput struct {
 type Review struct {
 	ID string `json:"id"`
 	// Written text
-	Comment *string `json:"comment,omitempty"`
+	Comment string `json:"comment"`
 	// A number from 1 - 5 with 1 being lowest and 5 being highest
-	Rating *int `json:"rating,omitempty"`
+	Rating int `json:"rating"`
 	// The location the review is about
-	Location *Location `json:"location,omitempty"`
+	Location *Location `json:"location"`
 }
 
 type SubmitReviewResponse struct {
