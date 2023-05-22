@@ -46,3 +46,9 @@ func (r *ormRepo) Create(location *model.Location) (*model.Location, error) {
 	result := r.db.Create(&location)
 	return location, result.Error
 }
+
+func (r *ormRepo) GetByName(name string) (*model.Location, error) {
+	var location model.Location
+	result := r.db.Take(&location, "name = ?", name)
+	return &location, result.Error
+}
