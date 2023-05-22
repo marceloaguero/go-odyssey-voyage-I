@@ -11,7 +11,9 @@ import (
 
 type Repository interface {
 	Create(location *model.Location) (*model.Location, error)
+	GetByID(id string) (*model.Location, error)
 	GetByName(name string) (*model.Location, error)
+	GetAll() ([]*model.Location, error)
 }
 
 type Usecase interface {
@@ -52,6 +54,15 @@ func (u *usecase) Create(location *model.Location) (*model.Location, error) {
 	return location, nil
 }
 
+func (u *usecase) GetByID(id string) (*model.Location, error) {
+	location, err := u.repository.GetByID(id)
+	if err != nil {
+		return nil, errors.Wrap(err, "UC - GetByID - Error fetching a location")
+	}
+
+	return location, nil
+}
+
 func (u *usecase) GetByName(name string) (*model.Location, error) {
 	location, err := u.repository.GetByName(name)
 	if err != nil {
@@ -59,4 +70,13 @@ func (u *usecase) GetByName(name string) (*model.Location, error) {
 	}
 
 	return location, nil
+}
+
+func (u *usecase) GetAll() ([]*model.Location, error) {
+	locations, err := u.repository.GetAll()
+	if err != nil {
+		return nil, errors.Wrap(err, "UC - GetAll - Error fetching all locations")
+	}
+
+	return locations, nil
 }

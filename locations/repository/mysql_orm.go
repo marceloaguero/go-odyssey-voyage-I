@@ -47,8 +47,20 @@ func (r *ormRepo) Create(location *model.Location) (*model.Location, error) {
 	return location, result.Error
 }
 
+func (r *ormRepo) GetByID(id string) (*model.Location, error) {
+	var location model.Location
+	result := r.db.Take(&location, "id = ?", id)
+	return &location, result.Error
+}
+
 func (r *ormRepo) GetByName(name string) (*model.Location, error) {
 	var location model.Location
 	result := r.db.Take(&location, "name = ?", name)
 	return &location, result.Error
+}
+
+func (r *ormRepo) GetAll() ([]*model.Location, error) {
+	locations := []*model.Location{}
+	result := r.db.Find(&locations)
+	return locations, result.Error
 }
