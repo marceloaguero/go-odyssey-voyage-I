@@ -1,0 +1,50 @@
+version: "3"
+
+services:
+
+  db:
+    image: mysql:8
+    environment:
+      - MYSQL_ROOT_PASSWORD=supersecret
+      - MYSQL_DATABASE=voyage1
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=supersecret
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", 'mysqladmin ping -u user -psupersecret']
+      interval: 10s
+      timeout: 2s
+      retries: 10
+
+  locations:
+    build:
+      context: ./locations
+    image: marceloaguero/voyage1-locations:local
+    environment:
+      - PORT=8081
+      - DB_DSN=user:supersecret@tcp(db:3306)
+      - DB_NAME=voyage1
+    ports:
+      - "8081:8081"
+    depends_on:
+      - db
+
+  reviews:
+    build:
+      context: ./reviews
+    image: marceloaguero/voyage1-reviews:local
+    environment:
+      - PORT=8082
+      - DB_DSN=user:supersecret@tcp(db:3306)
+      - DB_NAME=voyage1
+    ports:
+      - "8082:8082"
+    depends_on:
+      - db
+
+volumes:
+  db-data:
+
