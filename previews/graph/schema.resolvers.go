@@ -11,14 +11,14 @@ import (
 	"github.com/marceloaguero/go-odyssey-voyage-I/previews/graph/model"
 )
 
-// CreateTodo is the resolver for the createTodo field.
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: CreateTodo - createTodo"))
+// SubmitReview is the resolver for the submitReview field.
+func (r *mutationResolver) SubmitReview(ctx context.Context, locationReview *model.LocationReviewInput) (*model.SubmitReviewResponse, error) {
+	panic(fmt.Errorf("not implemented: SubmitReview - submitReview"))
 }
 
-// Todos is the resolver for the todos field.
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: Todos - todos"))
+// LatestReviews is the resolver for the latestReviews field.
+func (r *queryResolver) LatestReviews(ctx context.Context) ([]*model.Review, error) {
+	panic(fmt.Errorf("not implemented: LatestReviews - latestReviews"))
 }
 
 // Mutation returns MutationResolver implementation.
