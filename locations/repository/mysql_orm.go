@@ -42,7 +42,7 @@ func dbConnect(dsName, dbName string) (*gorm.DB, error) {
 	return db, nil
 }
 
-func (r *ormRepo) Create(location *model.LocationInput) (*model.Location, error) {
+func (r *ormRepo) Create(location *model.Location) (*model.Location, error) {
 	result := r.db.Create(&location)
 	return location, result.Error
 }
