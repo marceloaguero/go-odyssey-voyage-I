@@ -3,8 +3,8 @@ package mysql_orm
 import (
 	"fmt"
 
-	"github.com/marceloaguero/go-odyssey-voyage-I/locations/graph/model"
-	"github.com/marceloaguero/go-odyssey-voyage-I/locations/usecase"
+	"github.com/marceloaguero/go-odyssey-voyage-I/reviews/graph/model"
+	"github.com/marceloaguero/go-odyssey-voyage-I/reviews/usecase"
 	"github.com/pkg/errors"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -22,7 +22,7 @@ func NewRepo(dsName, dbName string) (usecase.Repository, error) {
 		return nil, errors.Wrap(err, "MySQL ORM - Can't connect to DB")
 	}
 
-	db.AutoMigrate(&model.Location{})
+	db.AutoMigrate(&model.Review{})
 
 	return &ormRepo{
 		db: db,
@@ -42,25 +42,19 @@ func dbConnect(dsName, dbName string) (*gorm.DB, error) {
 	return db, nil
 }
 
-func (r *ormRepo) Create(location *model.Location) (*model.Location, error) {
-	result := r.db.Create(&location)
-	return location, result.Error
+func (r *ormRepo) Create(review *model.Review) (*model.Review, error) {
+	result := r.db.Create(&review)
+	return review, result.Error
 }
 
-func (r *ormRepo) GetByID(id string) (*model.Location, error) {
-	var location model.Location
-	result := r.db.Take(&location, "id = ?", id)
-	return &location, result.Error
+func (r *ormRepo) GetByID(id string) (*model.Review, error) {
+	var review model.Review
+	result := r.db.Take(&review, "id = ?", id)
+	return &review, result.Error
 }
 
-func (r *ormRepo) GetByName(name string) (*model.Location, error) {
-	var location model.Location
-	result := r.db.Take(&location, "name = ?", name)
-	return &location, result.Error
-}
-
-func (r *ormRepo) GetAll() ([]*model.Location, error) {
-	locations := []*model.Location{}
-	result := r.db.Find(&locations)
-	return locations, result.Error
+func (r *ormRepo) GetAll() ([]*model.Review, error) {
+	reviews := []*model.Review{}
+	result := r.db.Find(&reviews)
+	return reviews, result.Error
 }
