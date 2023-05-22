@@ -6,7 +6,6 @@ require (
 	github.com/99designs/gqlgen v0.17.31
 	github.com/go-playground/validator/v10 v10.14.0
 	github.com/google/uuid v1.3.0
-	github.com/marceloaguero/go-odyssey-voyage-I/locations v0.0.0-20230522151912-841f4b9e7642
 	github.com/pkg/errors v0.9.1
 	github.com/vektah/gqlparser/v2 v2.5.1
 	gorm.io/driver/mysql v1.5.1

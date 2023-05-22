@@ -13,7 +13,20 @@ import (
 
 // SubmitReview is the resolver for the submitReview field.
 func (r *mutationResolver) SubmitReview(ctx context.Context, locationReview *model.LocationReviewInput) (*model.SubmitReviewResponse, error) {
-	panic(fmt.Errorf("not implemented: SubmitReview - submitReview"))
+	newReview := &model.Review{
+		Comment: &locationReview.Comment,
+		Rating:  &locationReview.Rating,
+	}
+	review, err := r.usecase.Create(newReview)
+
+	reviewResponse := &model.SubmitReviewResponse{
+		Code:           200,
+		Success:        true,
+		Message:        "Review added!",
+		LocationReview: review,
+	}
+
+	return reviewResponse, err
 }
 
 // LatestReviews is the resolver for the latestReviews field.
