@@ -2,19 +2,36 @@
 
 package model
 
-type NewTodo struct {
-	Text   string `json:"text"`
-	UserID string `json:"userId"`
+type Location struct {
+	ID string `json:"id"`
 }
 
-type Todo struct {
-	ID   string `json:"id"`
-	Text string `json:"text"`
-	Done bool   `json:"done"`
-	User *User  `json:"user"`
+type LocationReviewInput struct {
+	// Written text
+	Comment string `json:"comment"`
+	// A number from 1 - 5 with 1 being lowest and 5 being highest
+	Rating int `json:"rating"`
+	// Location Id
+	LocationID string `json:"locationId"`
 }
 
-type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+type Review struct {
+	ID string `json:"id"`
+	// Written text
+	Comment *string `json:"comment,omitempty"`
+	// A number from 1 - 5 with 1 being lowest and 5 being highest
+	Rating *int `json:"rating,omitempty"`
+	// The location the review is about
+	Location *Location `json:"location,omitempty"`
+}
+
+type SubmitReviewResponse struct {
+	// Similar to HTTP status code, represents the status of the mutation
+	Code int `json:"code"`
+	// Indicates whether the mutation was successful
+	Success bool `json:"success"`
+	// Human-readable message for the UI
+	Message string `json:"message"`
+	// Newly created review
+	LocationReview *Review `json:"locationReview,omitempty"`
 }
