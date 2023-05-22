@@ -5,5 +5,5 @@ import (
 )
 
 type Repository interface {
-	Create(location *model.LocationInput) (*model.Location, error)
+	Create(location *model.Location) (*model.Location, error)
 }
