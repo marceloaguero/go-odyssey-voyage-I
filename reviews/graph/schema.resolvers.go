@@ -6,7 +6,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/marceloaguero/go-odyssey-voyage-I/reviews/graph/model"
 )
@@ -14,8 +13,9 @@ import (
 // SubmitReview is the resolver for the submitReview field.
 func (r *mutationResolver) SubmitReview(ctx context.Context, locationReview *model.LocationReviewInput) (*model.SubmitReviewResponse, error) {
 	newReview := &model.Review{
-		Comment: locationReview.Comment,
-		Rating:  locationReview.Rating,
+		Comment:    locationReview.Comment,
+		Rating:     locationReview.Rating,
+		LocationID: locationReview.LocationID,
 	}
 	review, err := r.usecase.Create(newReview)
 
@@ -31,7 +31,8 @@ func (r *mutationResolver) SubmitReview(ctx context.Context, locationReview *mod
 
 // LatestReviews is the resolver for the latestReviews field.
 func (r *queryResolver) LatestReviews(ctx context.Context) ([]*model.Review, error) {
-	panic(fmt.Errorf("not implemented: LatestReviews - latestReviews"))
+	reviews, err := r.usecase.GetAll()
+	return reviews, err
 }
 
 // Mutation returns MutationResolver implementation.

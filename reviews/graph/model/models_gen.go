@@ -22,7 +22,7 @@ type Review struct {
 	// A number from 1 - 5 with 1 being lowest and 5 being highest
 	Rating int `json:"rating"`
 	// The location the review is about
-	Location *Location `json:"location"`
+	LocationID string `json:"locationID"`
 }
 
 type SubmitReviewResponse struct {

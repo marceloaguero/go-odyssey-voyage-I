@@ -58,10 +58,10 @@ type ComplexityRoot struct {
 	}
 
 	Review struct {
-		Comment  func(childComplexity int) int
-		ID       func(childComplexity int) int
-		Location func(childComplexity int) int
-		Rating   func(childComplexity int) int
+		Comment    func(childComplexity int) int
+		ID         func(childComplexity int) int
+		LocationID func(childComplexity int) int
+		Rating     func(childComplexity int) int
 	}
 
 	SubmitReviewResponse struct {
@@ -134,12 +134,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Review.ID(childComplexity), true
 
-	case "Review.location":
-		if e.complexity.Review.Location == nil {
+	case "Review.locationID":
+		if e.complexity.Review.LocationID == nil {
 			break
 		}
 
-		return e.complexity.Review.Location(childComplexity), true
+		return e.complexity.Review.LocationID(childComplexity), true
 
 	case "Review.rating":
 		if e.complexity.Review.Rating == nil {
@@ -483,8 +483,8 @@ func (ec *executionContext) fieldContext_Query_latestReviews(ctx context.Context
 				return ec.fieldContext_Review_comment(ctx, field)
 			case "rating":
 				return ec.fieldContext_Review_rating(ctx, field)
-			case "location":
-				return ec.fieldContext_Review_location(ctx, field)
+			case "locationID":
+				return ec.fieldContext_Review_locationID(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Review", field.Name)
 		},
@@ -753,8 +753,8 @@ func (ec *executionContext) fieldContext_Review_rating(ctx context.Context, fiel
 	return fc, nil
 }
 
-func (ec *executionContext) _Review_location(ctx context.Context, field graphql.CollectedField, obj *model.Review) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Review_location(ctx, field)
+func (ec *executionContext) _Review_locationID(ctx context.Context, field graphql.CollectedField, obj *model.Review) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Review_locationID(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -767,7 +767,7 @@ func (ec *executionContext) _Review_location(ctx context.Context, field graphql.
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Location, nil
+		return obj.LocationID, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -779,23 +779,19 @@ func (ec *executionContext) _Review_location(ctx context.Context, field graphql.
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.Location)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalNLocation2ᚖgithubᚗcomᚋmarceloagueroᚋgoᚑodysseyᚑvoyageᚑIᚋreviewsᚋgraphᚋmodelᚐLocation(ctx, field.Selections, res)
+	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Review_location(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Review_locationID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Review",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_Location_id(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type Location", field.Name)
+			return nil, errors.New("field of type ID does not have child fields")
 		},
 	}
 	return fc, nil
@@ -975,8 +971,8 @@ func (ec *executionContext) fieldContext_SubmitReviewResponse_locationReview(ctx
 				return ec.fieldContext_Review_comment(ctx, field)
 			case "rating":
 				return ec.fieldContext_Review_rating(ctx, field)
-			case "location":
-				return ec.fieldContext_Review_location(ctx, field)
+			case "locationID":
+				return ec.fieldContext_Review_locationID(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Review", field.Name)
 		},
@@ -2972,9 +2968,9 @@ func (ec *executionContext) _Review(ctx context.Context, sel ast.SelectionSet, o
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "location":
+		case "locationID":
 
-			out.Values[i] = ec._Review_location(ctx, field, obj)
+			out.Values[i] = ec._Review_locationID(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
@@ -3397,16 +3393,6 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 		}
 	}
 	return res
-}
-
-func (ec *executionContext) marshalNLocation2ᚖgithubᚗcomᚋmarceloagueroᚋgoᚑodysseyᚑvoyageᚑIᚋreviewsᚋgraphᚋmodelᚐLocation(ctx context.Context, sel ast.SelectionSet, v *model.Location) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._Location(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalNReview2ᚕᚖgithubᚗcomᚋmarceloagueroᚋgoᚑodysseyᚑvoyageᚑIᚋreviewsᚋgraphᚋmodelᚐReviewᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Review) graphql.Marshaler {
