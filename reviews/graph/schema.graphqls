@@ -13,7 +13,7 @@ type Review {
   locationID: ID!
 }
 
-type Location {
+type Location @key(fields: "id", resolvable: false) {
   id: ID!
 }
 
