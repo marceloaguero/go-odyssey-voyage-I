@@ -12,6 +12,8 @@ type Location struct {
 	Photo string `json:"photo"`
 }
 
+func (Location) IsEntity() {}
+
 type LocationInput struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
