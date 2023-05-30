@@ -3,6 +3,7 @@ package mysql_orm
 import (
 	"fmt"
 
+	"github.com/google/uuid"
 	"github.com/marceloaguero/go-odyssey-voyage-I/reviews/graph/model"
 	"github.com/marceloaguero/go-odyssey-voyage-I/reviews/usecase"
 	"github.com/pkg/errors"
@@ -42,7 +43,14 @@ func dbConnect(dsName, dbName string) (*gorm.DB, error) {
 	return db, nil
 }
 
-func (r *ormRepo) Create(review *model.Review) (*model.Review, error) {
+func (r *ormRepo) Create(input *model.LocationReviewInput) (*model.Review, error) {
+	var review *model.Review
+
+	review.ID = uuid.NewString()
+	review.Comment = input.Comment
+	review.Rating = input.Rating
+	review.LocationID = input.LocationID
+
 	result := r.db.Create(&review)
 	return review, result.Error
 }

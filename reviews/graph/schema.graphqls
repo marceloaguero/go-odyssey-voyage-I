@@ -17,10 +17,6 @@ type Review {
   locationID: ID!
 }
 
-type Location @key(fields: "id", resolvable: false) {
-  id: ID!
-}
-
 type Mutation {
   submitReview(locationReview: LocationReviewInput): SubmitReviewResponse
 }

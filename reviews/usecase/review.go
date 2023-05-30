@@ -2,13 +2,12 @@ package usecase
 
 import (
 	"github.com/go-playground/validator/v10"
-	"github.com/google/uuid"
 	"github.com/marceloaguero/go-odyssey-voyage-I/reviews/graph/model"
 	"github.com/pkg/errors"
 )
 
 type Repository interface {
-	Create(review *model.Review) (*model.Review, error)
+	Create(input *model.LocationReviewInput) (*model.Review, error)
 	GetByID(id string) (*model.Review, error)
 	GetAll() ([]*model.Review, error)
 }
@@ -27,16 +26,15 @@ func NewUsecase(repo Repository) Usecase {
 	}
 }
 
-func (u *usecase) Create(review *model.Review) (*model.Review, error) {
+func (u *usecase) Create(input *model.LocationReviewInput) (*model.Review, error) {
 	validate := validator.New()
-	err := validate.Struct(review)
+	err := validate.Struct(input)
 	if err != nil {
 		validationErrors := err.(validator.ValidationErrors)
 		return nil, errors.Wrap(validationErrors, "UC - Create - Error during review data validation")
 	}
 
-	review.ID = uuid.NewString()
-	review, err = u.repository.Create(review)
+	review, err := u.repository.Create(input)
 	if err != nil {
 		return nil, errors.Wrap(err, "UC - Create - Error creating a new review")
 	}
