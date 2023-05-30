@@ -4,13 +4,12 @@ import (
 	"strings"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/google/uuid"
 	"github.com/marceloaguero/go-odyssey-voyage-I/locations/graph/model"
 	"github.com/pkg/errors"
 )
 
 type Repository interface {
-	Create(location *model.Location) (*model.Location, error)
+	Create(location *model.LocationInput) (*model.Location, error)
 	GetByID(id string) (*model.Location, error)
 	GetByName(name string) (*model.Location, error)
 	GetAll() ([]*model.Location, error)
@@ -30,23 +29,23 @@ func NewUsecase(repo Repository) Usecase {
 	}
 }
 
-func (u *usecase) Create(location *model.Location) (*model.Location, error) {
+func (u *usecase) Create(input *model.LocationInput) (*model.Location, error) {
+
 	// Verify name uniqueness
-	location.Name = strings.TrimSpace(location.Name)
-	_, err := u.GetByName(location.Name)
+	input.Name = strings.TrimSpace(input.Name)
+	_, err := u.GetByName(input.Name)
 	if err == nil {
-		return nil, errors.Errorf("UC - Create - Location with name %s already exists", location.Name)
+		return nil, errors.Errorf("UC - Create - Location with name %s already exists", input.Name)
 	}
 
 	validate := validator.New()
-	err = validate.Struct(location)
+	err = validate.Struct(input)
 	if err != nil {
 		validationErrors := err.(validator.ValidationErrors)
 		return nil, errors.Wrap(validationErrors, "UC - Create - Error during location data validation")
 	}
 
-	location.ID = uuid.NewString()
-	location, err = u.repository.Create(location)
+	location, err := u.repository.Create(input)
 	if err != nil {
 		return nil, errors.Wrap(err, "UC - Create - Error creating a new location")
 	}

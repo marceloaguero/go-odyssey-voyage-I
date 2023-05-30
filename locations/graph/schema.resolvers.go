@@ -12,25 +12,17 @@ import (
 
 // NewLocation is the resolver for the newLocation field.
 func (r *mutationResolver) NewLocation(ctx context.Context, input model.LocationInput) (*model.Location, error) {
-	newLocation := &model.Location{
-		Name:        input.Name,
-		Description: input.Description,
-		Photo:       input.Photo,
-	}
-	location, err := r.usecase.Create(newLocation)
-	return location, err
+	return r.usecase.Create(&input)
 }
 
 // Locations is the resolver for the locations field.
 func (r *queryResolver) Locations(ctx context.Context) ([]*model.Location, error) {
-	locations, err := r.usecase.GetAll()
-	return locations, err
+	return r.usecase.GetAll()
 }
 
 // Location is the resolver for the location field.
 func (r *queryResolver) Location(ctx context.Context, id string) (*model.Location, error) {
-	location, err := r.usecase.GetByID(id)
-	return location, err
+	return r.usecase.GetByID(id)
 }
 
 // Mutation returns MutationResolver implementation.

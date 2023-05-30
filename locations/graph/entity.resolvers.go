@@ -12,8 +12,7 @@ import (
 
 // FindLocationByID is the resolver for the findLocationByID field.
 func (r *entityResolver) FindLocationByID(ctx context.Context, id string) (*model.Location, error) {
-	location, err := r.usecase.GetByID(id)
-	return location, err
+	return r.usecase.GetByID(id)
 }
 
 // Entity returns EntityResolver implementation.
