@@ -21,6 +21,8 @@ type Review struct {
 	LocationID string `json:"locationID"`
 }
 
+func (Review) IsEntity() {}
+
 type SubmitReviewResponse struct {
 	// Similar to HTTP status code, represents the status of the mutation
 	Code int `json:"code"`

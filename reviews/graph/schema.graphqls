@@ -7,7 +7,7 @@ type Query {
   latestReviews: [Review!]!
 }
 
-type Review {
+type Review @key(fields: "id") {
   id: ID!
   "Written text"
   comment: String!

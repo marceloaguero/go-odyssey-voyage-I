@@ -26,8 +26,7 @@ func (r *mutationResolver) SubmitReview(ctx context.Context, locationReview *mod
 
 // LatestReviews is the resolver for the latestReviews field.
 func (r *queryResolver) LatestReviews(ctx context.Context) ([]*model.Review, error) {
-	reviews, err := r.usecase.GetAll()
-	return reviews, err
+	return r.usecase.GetAll()
 }
 
 // Mutation returns MutationResolver implementation.
