@@ -61,6 +61,12 @@ func (r *ormRepo) GetByID(id string) (*model.Review, error) {
 	return &review, result.Error
 }
 
+func (r *ormRepo) GetByLocationID(locationID string) ([]*model.Review, error) {
+	reviews := []*model.Review{}
+	result := r.db.Find(&reviews, "location_id = ?", locationID)
+	return reviews, result.Error
+}
+
 func (r *ormRepo) GetAll() ([]*model.Review, error) {
 	reviews := []*model.Review{}
 	result := r.db.Find(&reviews)

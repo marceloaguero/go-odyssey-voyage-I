@@ -6,9 +6,15 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/marceloaguero/go-odyssey-voyage-I/reviews/graph/model"
 )
+
+// Reviews is the resolver for the reviews field.
+func (r *locationResolver) Reviews(ctx context.Context, obj *model.Location) ([]*model.Review, error) {
+	panic(fmt.Errorf("not implemented: Reviews - reviews"))
+}
 
 // SubmitReview is the resolver for the submitReview field.
 func (r *mutationResolver) SubmitReview(ctx context.Context, locationReview *model.LocationReviewInput) (*model.SubmitReviewResponse, error) {
@@ -29,11 +35,15 @@ func (r *queryResolver) LatestReviews(ctx context.Context) ([]*model.Review, err
 	return r.usecase.GetAll()
 }
 
+// Location returns LocationResolver implementation.
+func (r *Resolver) Location() LocationResolver { return &locationResolver{r} }
+
 // Mutation returns MutationResolver implementation.
 func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
 
 // Query returns QueryResolver implementation.
 func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
 
+type locationResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }

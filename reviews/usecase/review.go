@@ -9,6 +9,7 @@ import (
 type Repository interface {
 	Create(input *model.LocationReviewInput) (*model.Review, error)
 	GetByID(id string) (*model.Review, error)
+	GetByLocationID(locationID string) ([]*model.Review, error)
 	GetAll() ([]*model.Review, error)
 }
 
@@ -49,6 +50,15 @@ func (u *usecase) GetByID(id string) (*model.Review, error) {
 	}
 
 	return review, nil
+}
+
+func (u *usecase) GetByLocationID(locationID string) ([]*model.Review, error) {
+	reviews, err := u.repository.GetByLocationID(locationID)
+	if err != nil {
+		return nil, errors.Wrap(err, "UC - GetByLocationID - Error fetching location reviews")
+	}
+
+	return reviews, nil
 }
 
 func (u *usecase) GetAll() ([]*model.Review, error) {

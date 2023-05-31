@@ -2,6 +2,14 @@
 
 package model
 
+type Location struct {
+	ID string `json:"id"`
+	// Location reviews
+	Reviews []*Review `json:"reviews"`
+}
+
+func (Location) IsEntity() {}
+
 type LocationReviewInput struct {
 	// Written text
 	Comment string `json:"comment"`

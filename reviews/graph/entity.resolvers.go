@@ -6,9 +6,15 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/marceloaguero/go-odyssey-voyage-I/reviews/graph/model"
 )
+
+// FindLocationByID is the resolver for the findLocationByID field.
+func (r *entityResolver) FindLocationByID(ctx context.Context, id string) (*model.Location, error) {
+	panic(fmt.Errorf("not implemented: FindLocationByID - findLocationByID"))
+}
 
 // FindReviewByID is the resolver for the findReviewByID field.
 func (r *entityResolver) FindReviewByID(ctx context.Context, id string) (*model.Review, error) {

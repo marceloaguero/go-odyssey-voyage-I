@@ -2,6 +2,8 @@ extend schema
   @link(url: "https://specs.apollo.dev/federation/v2.0",
         import: ["@key"])
 
+directive @goField(forceResolver: Boolean, name: String) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+
 type Query {
   "The three latest reviews submitted for FlyBy's locations"
   latestReviews: [Review!]!
@@ -15,6 +17,12 @@ type Review @key(fields: "id") {
   rating: Int!
   "The location the review is about"
   locationID: ID!
+}
+
+type Location @key(fields: "id") @extends {
+  id: ID!
+  "Location reviews"
+  reviews: [Review!]! @goField(forceResolver: true)
 }
 
 type Mutation {
