@@ -6,14 +6,13 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/marceloaguero/go-odyssey-voyage-I/reviews/graph/model"
 )
 
 // Reviews is the resolver for the reviews field.
 func (r *locationResolver) Reviews(ctx context.Context, obj *model.Location) ([]*model.Review, error) {
-	panic(fmt.Errorf("not implemented: Reviews - reviews"))
+	return r.usecase.GetByLocationID(obj.ID)
 }
 
 // SubmitReview is the resolver for the submitReview field.
