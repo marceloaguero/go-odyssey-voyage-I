@@ -34,7 +34,8 @@ func dbConnect(dsName, dbName string) (*gorm.DB, error) {
 	conn := fmt.Sprintf("%s/%s?charset=utf8&parseTime=True&loc=Local", dsName, dbName)
 
 	db, err := gorm.Open(mysql.Open(conn), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Warn),
+		//Logger: logger.Default.LogMode(logger.Warn),
+		Logger: logger.Default.LogMode(logger.Info),
 	})
 	if err != nil {
 		return nil, err
